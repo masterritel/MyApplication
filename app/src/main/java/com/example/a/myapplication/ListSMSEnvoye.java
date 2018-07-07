@@ -1,13 +1,17 @@
 package com.example.a.myapplication;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,6 +42,14 @@ ListView l;
             id=x.getString("id");
 new getLogin().execute();
         }
+      /* l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i=new Intent(ListSMSEnvoye.this,DetailContact.class);
+                i.putExtra("key",id);
+                startActivity(i);
+            }
+        });*/
 
 
 

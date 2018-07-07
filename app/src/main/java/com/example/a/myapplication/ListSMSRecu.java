@@ -30,7 +30,7 @@ public class ListSMSRecu extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_smsenvoye);
+        setContentView(R.layout.activity_list_smsrecu);
         l=findViewById(R.id.lst2);
         Bundle x=getIntent().getExtras();
         if(x!=null)

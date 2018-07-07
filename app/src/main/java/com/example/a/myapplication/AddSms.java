@@ -33,12 +33,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class AddSms extends AppCompatActivity {
-Button envoyer;
-EditText  message;
-String id,tel,idContact,numero;
-ArrayList<String> all= new ArrayList<String>();
+    Button envoyer;
+    EditText  message;
+    String id,tel,idContact,numero;
+    ArrayList<String> all= new ArrayList<String>();
     ArrayList<String> allContact= new ArrayList<String>();
-ArrayList<HashMap<String,String>>values=new ArrayList<HashMap<String,String>>();
+    ArrayList<HashMap<String,String>>values=new ArrayList<HashMap<String,String>>();
     HashMap<String,String> map;
     MultiAutoCompleteTextView phone;
     JSONParser json =new JSONParser();
@@ -57,18 +57,18 @@ ArrayList<HashMap<String,String>>values=new ArrayList<HashMap<String,String>>();
         {
             id=x.getString("key");
             Toast.makeText(AddSms.this,id,Toast.LENGTH_LONG).show();
-           new getLogin().execute();
+            new getLogin().execute();
         }
         phone.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 HashMap<String,String>map=(HashMap<String, String>)phone.getAdapter().getItem(position);
-idContact=map.get("id");
-tel=map.get("num");
-all.add(tel);
-allContact.add(idContact);
-String nums=all.toString().replace("[", "");
-String fin=nums.replace("]","")+",";
+                idContact=map.get("id");
+                tel=map.get("num");
+                all.add(tel);
+                allContact.add(idContact);
+                String nums=all.toString().replace("[", "");
+                String fin=nums.replace("]","")+",";
 
                 phone.setText(fin);
                 phone.setSelection(fin.length());
@@ -84,12 +84,12 @@ String fin=nums.replace("]","")+",";
                 }
                 else
                 {
-                SmsManager smsManager = SmsManager.getDefault();
-                for (int a1 = 0; a1 < all.size(); a1++)
-                {
+                    SmsManager smsManager = SmsManager.getDefault();
+                    for (int a1 = 0; a1 < all.size(); a1++)
+                    {
 
-             //smsManager.sendTextMessage(all.get(a1).toString(), null, message.getText().toString(),null, null);
-                }}
+                        //smsManager.sendTextMessage(all.get(a1).toString(), null, message.getText().toString(),null, null);
+                    }}
             }
         });
         phone.addTextChangedListener(new TextWatcher() {
@@ -134,7 +134,7 @@ String fin=nums.replace("]","")+",";
                         map.put("id",ob.getString("id"));
                         map.put("nom",ob.getString("nom"));
                         map.put("num",ob.getString("numero"));
-                       values.add(map);
+                        values.add(map);
                     }
                     Log.e("values",values.toString());
              /*       Intent i=new Intent(AddSms.this,Dashboard.class);
@@ -157,69 +157,68 @@ String fin=nums.replace("]","")+",";
             phone.setAdapter(adapter);
             phone.setThreshold(3);
             phone.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-            }
-        }
-
-
-        class add extends AsyncTask<String,String,String>
-        {
-            @Override
-            protected void onPreExecute() {
-                p2=new ProgressDialog(AddSms.this);
-                p2.setTitle("loading");
-                p2.show();
-
-                super.onPreExecute();
-            }
-
-
-
-            @Override
-            protected String doInBackground(String... strings) {
-                for(int i=0;i<all.size();i++) {
-                    HashMap<String, String> mp = new HashMap<String, String>();
-                    mp.put("user", id);
-                    mp.put("numero",all.get(i).toString());
-                    mp.put("contact",allContact.get(i).toString());
-                    mp.put("text",message.getText().toString());
-                    JSONObject ot = json.makeHttpRequest("https://salhapfe.000webhostapp.com/addSms.php","GET",mp);
-                    try {
-                         getSuccess= ot.getInt("success");
-
-
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return null;
-
-            }
-            @Override
-            protected void onPostExecute(String s) {
-                p2.dismiss();
-                super.onPostExecute(s);
-                if(getSuccess==1)
-                {
-                    AlertDialog.Builder alertDialog=new AlertDialog.Builder(AddSms.this);
-                    alertDialog.setTitle("Alerte");
-                    alertDialog.setMessage("sms ajouter avec succès");
-                    alertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent=new Intent(AddSms.this,ListSMSEnvoye.class);
-                            intent.putExtra("id",id);
-                            startActivity(intent);
-                        }
-                    });
-                    alertDialog.show();
-
-
-
-                }
-
-            }
         }
     }
 
+
+    class add extends AsyncTask<String,String,String>
+    {
+        @Override
+        protected void onPreExecute() {
+            p2=new ProgressDialog(AddSms.this);
+            p2.setTitle("loading");
+            p2.show();
+
+            super.onPreExecute();
+        }
+
+
+
+        @Override
+        protected String doInBackground(String... strings) {
+            for(int i=0;i<all.size();i++) {
+                HashMap<String, String> mp = new HashMap<String, String>();
+                mp.put("user", id);
+                mp.put("numero",all.get(i).toString());
+                mp.put("contact",allContact.get(i).toString());
+                mp.put("text",message.getText().toString());
+                JSONObject ot = json.makeHttpRequest("https://salhapfe.000webhostapp.com/addSms.php","GET",mp);
+                try {
+                    getSuccess= ot.getInt("success");
+
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+
+        }
+        @Override
+        protected void onPostExecute(String s) {
+            p2.dismiss();
+            super.onPostExecute(s);
+            if(getSuccess==1)
+            {
+                AlertDialog.Builder alertDialog=new AlertDialog.Builder(AddSms.this);
+                alertDialog.setTitle("Alerte");
+                alertDialog.setMessage("sms ajouter avec succès");
+                alertDialog.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent=new Intent(AddSms.this,ListSMSEnvoye.class);
+                        intent.putExtra("id",id);
+                        startActivity(intent);
+                    }
+                });
+                alertDialog.show();
+
+
+
+            }
+
+        }
+    }
+}

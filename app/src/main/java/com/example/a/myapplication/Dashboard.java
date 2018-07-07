@@ -23,9 +23,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Dashboard extends AppCompatActivity {
-String id;
-String nom,num;
-ListView l;
+    String id;
+    String nom,num;
+    ListView l;
     JSONParser json =new JSONParser();
     ProgressDialog p;
     int success;
@@ -48,12 +48,19 @@ ListView l;
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent= new Intent(Dashboard.this,DetailContact.class);
-                intent.putExtra("key",id);
+                intent.putExtra("key1",id);
                 intent.putExtra("key2",nom);
                 intent.putExtra("key3",num);
                 startActivity(intent);
             }
         });
+      /*  Bundle s=getIntent().getExtras();
+        if(s!=null)
+        {
+            id=s.getString("ss2");
+            num=s.getString("ss");
+
+        }*/
 
     }
 
@@ -72,8 +79,8 @@ ListView l;
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId())
         {
-            case 1:Intent i=new Intent(Dashboard.this,AddSms.class);
-            i.putExtra("key",id);
+            case 1:Intent i=new Intent(Dashboard.this, com.example.a.myapplication.AddSms.class);
+                i.putExtra("key",id);
                 startActivity(i);break;
             case 2:finish();
 
@@ -119,8 +126,8 @@ ListView l;
                         map.put("num",ob.getString("numero"));
                         values.add(map);
                     }
-                    Log.e("values",values.toString());
-             /*       Intent i=new Intent(AddSms.this,Dashboard.class);
+                  /*  Log.e("values",values.toString());
+                    Intent i=new Intent(Dashboard.this,DetailContact.class);
                     i.putExtra("key",id);
                     startActivity(i);*/
 
